@@ -13,7 +13,7 @@ COPY . .
 
 ENV GIN_MODE=release
 
-RUN go build -o main .
+RUN go build -o main ./cmd/app/main.go
 
 EXPOSE 8000
 
