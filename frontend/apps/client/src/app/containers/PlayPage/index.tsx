@@ -137,7 +137,6 @@ export default function PlayPage() {
           disabledNext={index === playData?.questions?.length - 1}
         />
       </div>
-      <button onClick={() => socket.send("JSON.stringify({ type: 'login', token })")}>ádsadasd</button>
       <QuestionList playData={playData} selectQuestion={selectQuestion} />
     </div>
   ) : (

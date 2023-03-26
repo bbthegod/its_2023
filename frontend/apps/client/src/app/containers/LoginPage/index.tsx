@@ -56,8 +56,8 @@ export default function LoginPage() {
   };
   //====================================== Render ======================================
   return (
-    <div className="p-6 grow flex flex-col justify-center">
-      <div className="p-6">
+    <div className="p-6 grow flex flex-col justify-center items-center">
+      <div className="p-6 max-w-lg w-full">
         <Formik initialValues={{ studentCode: '2017604482', password: '123456' }} validationSchema={validationSchema} onSubmit={onSubmit}>
           {({ errors, touched }) => (
             <Form autoComplete="off">
@@ -114,7 +114,7 @@ const Input = (props: any) => {
   const [field, meta] = useField(props.name);
   return (
     <>
-      <input {...field} {...props} className={`input input-bordered ${meta.error ? "input-error" : ""} w-full max-w-xs`} />
+      <input {...field} {...props} className={`input input-bordered ${meta.error ? "input-error" : ""} w-full`} />
       {meta.error && meta.touched && <p className='mt-2 text-error text-xs font-semibold'>{meta.error}</p>}
      </>
   )
