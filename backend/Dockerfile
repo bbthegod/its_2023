@@ -12,6 +12,10 @@ RUN go mod download
 COPY . .
 
 ENV GIN_MODE=release
+ENV PORT=8000
+ENV DB_URL=mongodb://mongo:27017/itsupporter
+ENV DB_NAME=itsupporter
+ENV JWT_SECRET=secret
 
 RUN go build -o main ./cmd/app/main.go
 

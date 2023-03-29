@@ -1,34 +1,38 @@
-version: "3"
+version: "1"
 
 services:
   # admin:
   #   build:
-  #     context: ./admin
+  #     context: ./frontend
+  #     dockerfile: admin.Dockerfile
   #   ports:
-  #     - 3001:80
+  #     - 3000:80
 
-  # client:
-  #   build:
-  #     context: ./client
-  #   ports:
-  #     - 80:80
-
-  backend:
-    restart: always
+  client:
     build:
-      context: ./backend
+      context: ./frontend
+      dockerfile: client.Dockerfile
     ports:
-      - 8000:8000
-    volumes:
-      - ./:/code
+      - 80:80
 
-  # mongo:
-  #   image: mongo
-  #   ports:
-  #     - 27017:27017
-  #   volumes:
-  #     - ./backend/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-  #     - mongodb:/data/db
+#   backend:
+#     restart: always
+#     build:
+#       context: ./backend
+#     ports:
+#       - 8000:8000
+#     volumes:
+#       - ./:/code
+#     depends_on:
+#       - mongo
+
+#   mongo:
+#     image: mongo
+#     ports:
+#       - 27017:27017
+#     volumes:
+#       - ./backend/migration/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+#       - mongodb:/data/db
 
 # volumes:
 #   mongodb:

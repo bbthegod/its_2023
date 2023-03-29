@@ -2,16 +2,19 @@
 
 # compiled output
 /backend/dist
+/backend/tmp
 /frontend/dist
-/dist
-/tmp
-/out-tsc
+/frontend/tmp
+/frontend/out-tsc
 
 # dependencies
 node_modules
 
 # IDEs and editors
 /.idea
+*.iml
+gin-bin
+vendor
 .project
 .classpath
 .c9/
@@ -40,4 +43,10 @@ testem.log
 
 # System Files
 .DS_Store
+.DS_Store?
 Thumbs.db
+
+# SENSITVE DATA #
+.gitconfig
+.env
+cert/
