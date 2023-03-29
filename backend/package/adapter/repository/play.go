@@ -269,7 +269,10 @@ func getRandomQuestion(repository *playRepository) ([]model.PlayQuestion, error)
 	defer cancel()
 
 	var result []model.PlayQuestion
-	var questions []*model.Question
+
+	var easyQuestions []*model.Question
+	var mediumQuestions []*model.Question
+	var hardQuestions []*model.Question
 
 	cursor, err := repository.questionCollection.Find(ctx, bson.M{})
 	if err != nil {
@@ -281,13 +284,47 @@ func getRandomQuestion(repository *playRepository) ([]model.PlayQuestion, error)
 		if err := cursor.Decode(&question); err != nil {
 			return nil, err
 		}
-		questions = append(questions, question)
+		if question.Level == "easy" {
+			easyQuestions = append(easyQuestions, question)
+		}
+		if question.Level == "medium" {
+			mediumQuestions = append(mediumQuestions, question)
+		}
+		if question.Level == "hard" {
+			hardQuestions = append(hardQuestions, question)
+		}
 	}
-	rand.Shuffle(len(questions), func(i, j int) { questions[i], questions[j] = questions[j], questions[i] })
-	if len(questions) > 20 {
-		questions = questions[:20]
+
+	rand.Shuffle(len(easyQuestions), func(i, j int) { easyQuestions[i], easyQuestions[j] = easyQuestions[j], easyQuestions[i] })
+	if len(easyQuestions) > 12 {
+		easyQuestions = easyQuestions[:12]
 	}
-	for _, s := range questions {
+
+	rand.Shuffle(len(mediumQuestions), func(i, j int) { mediumQuestions[i], mediumQuestions[j] = mediumQuestions[j], mediumQuestions[i] })
+	if len(mediumQuestions) > 5 {
+		mediumQuestions = mediumQuestions[:5]
+	}
+
+	rand.Shuffle(len(hardQuestions), func(i, j int) { hardQuestions[i], hardQuestions[j] = hardQuestions[j], hardQuestions[i] })
+	if len(hardQuestions) > 3 {
+		hardQuestions = hardQuestions[:3]
+	}
+
+	for _, s := range easyQuestions {
+		result = append(result, model.PlayQuestion{
+			Id:         primitive.NewObjectID(),
+			QuestionId: s.Id,
+			Answered:   false,
+		})
+	}
+	for _, s := range mediumQuestions {
+		result = append(result, model.PlayQuestion{
+			Id:         primitive.NewObjectID(),
+			QuestionId: s.Id,
+			Answered:   false,
+		})
+	}
+	for _, s := range hardQuestions {
 		result = append(result, model.PlayQuestion{
 			Id:         primitive.NewObjectID(),
 			QuestionId: s.Id,

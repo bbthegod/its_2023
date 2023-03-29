@@ -22,16 +22,6 @@ type questionRepository struct {
 func NewQuestionRepository(db *mongo.Client) repository.QuestionRepository {
 	env := config.GetENV()
 	collection := db.Database(env.DbName).Collection("questions")
-	_, err := collection.Indexes().CreateOne(context.TODO(), mongo.IndexModel{
-		Keys:    bson.M{"studentCode": 1},
-		Options: options.Index().SetUnique(true),
-	})
-	if err != nil {
-		code := err.(mongo.CommandError).Code
-		if code != 11000 {
-			panic(err)
-		}
-	}
 	return &questionRepository{collection}
 }
 
@@ -103,6 +93,7 @@ func (repository *questionRepository) Update(id primitive.ObjectID, question *mo
 		"content":       question.Content,
 		"options":       question.Options,
 		"correctAnswer": question.CorrectAnswer,
+		"level":         question.Level,
 	}
 
 	var result *model.Question

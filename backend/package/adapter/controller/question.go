@@ -73,6 +73,7 @@ func (controller *questionController) Create(ctx *gin.Context) error {
 	question.Content = params.Content
 	question.Options = params.Options
 	question.CorrectAnswer = params.CorrectAnswer
+	question.Level = params.Level
 
 	res, code, err := controller.questionUsecase.Create(question)
 	if err != nil {
@@ -103,6 +104,7 @@ func (controller *questionController) Update(ctx *gin.Context) error {
 	question.Content = params.Content
 	question.Options = params.Options
 	question.CorrectAnswer = params.CorrectAnswer
+	question.Level = params.Level
 
 	res, code, err := controller.questionUsecase.Update(id, question)
 	if err != nil {

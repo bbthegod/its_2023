@@ -9,6 +9,7 @@ type Question struct {
 	Content       string             `json:"content,omitempty"`
 	Options       []Options          `json:"options,omitempty"`
 	CorrectAnswer int                `json:"correctAnswer,omitempty"`
+	Level         string             `json:"level,omitempty"`
 }
 
 type Options struct {
@@ -20,4 +21,5 @@ type QuestionBodyParams struct {
 	Content       string    `json:"content"`
 	Options       []Options `json:"options"`
 	CorrectAnswer int       `json:"correctAnswer"`
+	Level         string    `json:"level"`
 }
