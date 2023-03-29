@@ -14,8 +14,8 @@ import SearchBar from '../../components/SearchBar';
 import DataTable from '../../components/DataTable';
 import Header from '../../components/Header';
 
-const heading = ['Nội dung', 'Câu trả lời 1', 'Câu trả lời 2', 'Câu trả lời 3', 'Câu trả lời 4'];
-const value = ['content', 'options[0].answer', 'options[1].answer', 'options[2].answer', 'options[3].answer'];
+const heading = ['Nội dung', 'Độ Khó', 'Câu trả lời 1', 'Câu trả lời 2', 'Câu trả lời 3', 'Câu trả lời 4'];
+const value = ['content', 'level', 'options[0].answer', 'options[1].answer', 'options[2].answer', 'options[3].answer'];
 
 export default function QuestionPage() {
   const Snackbar = useContext(SnackbarContext);

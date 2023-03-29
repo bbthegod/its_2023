@@ -15,8 +15,8 @@ import ContentDetail from '../../components/ContentDetail';
 import QuestionDialog from '../../components/QuestionDialog';
 import Header from '../../components/Header';
 
-const heading = ['Nội dung', 'Câu trả lời 1', 'Câu trả lời 2', 'Câu trả lời 3', 'Câu trả lời 4', 'Câu trả lời đúng'];
-const value = ['content', 'options[0].answer', 'options[1].answer', 'options[2].answer', 'options[3].answer', 'correctAnswer'];
+const heading = ['Nội dung', 'Độ Khó', 'Câu trả lời 1', 'Câu trả lời 2', 'Câu trả lời 3', 'Câu trả lời 4', 'Câu trả lời đúng'];
+const value = ['content', 'level', 'options[0].answer', 'options[1].answer', 'options[2].answer', 'options[3].answer', 'correctAnswer'];
 
 export default function QuestionDetail() {
   //====================================== Hook ======================================

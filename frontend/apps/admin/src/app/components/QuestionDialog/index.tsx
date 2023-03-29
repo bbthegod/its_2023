@@ -34,6 +34,7 @@ export default function QuestionDialog({ open, setOpen, data, handleSubmit }: Pr
         ...data,
         ...{ content: values.content },
         ...{ correctAnswer: +values.correctAnswer },
+        ...{ level: values.level },
         ...{
           options: [
             { numbering: 1, answer: values.answer1 },
@@ -47,6 +48,7 @@ export default function QuestionDialog({ open, setOpen, data, handleSubmit }: Pr
       handleSubmit({
         ...{ content: values.content },
         ...{ correctAnswer: +values.correctAnswer },
+        ...{ level: values.level },
         ...{
           options: [
             { numbering: 1, answer: values.answer1 },
@@ -70,6 +72,7 @@ export default function QuestionDialog({ open, setOpen, data, handleSubmit }: Pr
           answer3: data ? data.options[2].answer : '',
           answer4: data ? data.options[3].answer : '',
           correctAnswer: data ? data.correctAnswer : '',
+          level: data ? data.level : 'easy',
         }}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
@@ -91,13 +94,12 @@ export default function QuestionDialog({ open, setOpen, data, handleSubmit }: Pr
                   </div>
                   <div>
                     <Select
-                      name="correctAnswer"
-                      label="Câu trả lời đúng"
+                      name="level"
+                      label="Độ Khó"
                     >
-                      <option value={1}>{values.answer1}</option>
-                      <option value={2}>{values.answer2}</option>
-                      <option value={3}>{values.answer3}</option>
-                      <option value={4}>{values.answer4}</option>
+                      <option value="easy">Dễ</option>
+                      <option value="medium">Trung Bình</option>
+                      <option value="hard">Khó</option>
                     </Select>
                   </div>
                   <div>
@@ -127,6 +129,17 @@ export default function QuestionDialog({ open, setOpen, data, handleSubmit }: Pr
                       label="Câu Trả Lời 4"
                       type="text"
                     />
+                  </div>
+                  <div className="col-span-2"> 
+                    <Select
+                      name="correctAnswer"
+                      label="Câu trả lời đúng"
+                    >
+                      <option value={1}>{values.answer1}</option>
+                      <option value={2}>{values.answer2}</option>
+                      <option value={3}>{values.answer3}</option>
+                      <option value={4}>{values.answer4}</option>
+                    </Select>
                   </div>
                 </div>
               </div>
