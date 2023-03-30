@@ -37,7 +37,7 @@ func (controller *authController) Login(ctx *gin.Context) error {
 		return err
 	}
 
-	ctx.JSON(http.StatusAccepted, types.LoginResponse{Token: token, User: types.LoginResponseUser{Id: user.Id, StudentCode: user.StudentCode, StudentName: user.StudentName}})
+	ctx.JSON(http.StatusAccepted, types.LoginResponse{Token: *token, User: types.LoginResponseUser{Id: user.Id, StudentCode: user.StudentCode, StudentName: user.StudentName}})
 	return nil
 }
 

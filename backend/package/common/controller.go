@@ -61,7 +61,7 @@ func GetBodyParams(c *gin.Context, data interface{}) error {
 	return nil
 }
 
-func EncodeToken(user *model.User) (string, error) {
+func EncodeToken(user *model.User) (*string, error) {
 	claims := &types.Claims{
 		Id:               user.Id,
 		StudentCode:      user.StudentCode,
@@ -72,9 +72,9 @@ func EncodeToken(user *model.User) (string, error) {
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := t.SignedString([]byte(os.Getenv("JWT_SECRET")))
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	return token, err
+	return &token, err
 }
 
 func EncodePassword(password string) (string, error) {
