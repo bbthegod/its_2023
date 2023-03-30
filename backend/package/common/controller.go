@@ -13,6 +13,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/golang-jwt/jwt/v4"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"golang.org/x/crypto/bcrypt"
 )
 
 var validate = validator.New()
@@ -60,7 +61,7 @@ func GetBodyParams(c *gin.Context, data interface{}) error {
 	return nil
 }
 
-func EncodeToken(c *gin.Context, user *model.User) (token string) {
+func EncodeToken(user *model.User) (string, error) {
 	claims := &types.Claims{
 		Id:               user.Id,
 		StudentCode:      user.StudentCode,
@@ -71,10 +72,14 @@ func EncodeToken(c *gin.Context, user *model.User) (token string) {
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	token, err := t.SignedString([]byte(os.Getenv("JWT_SECRET")))
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, types.Response{Error: err.Error()})
-		c.Abort()
+		return "", err
 	}
-	return token
+	return token, err
+}
+
+func EncodePassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
 }
 
 func GetAuth(c *gin.Context) (result types.Claims) {

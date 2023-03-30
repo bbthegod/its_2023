@@ -16,8 +16,8 @@ import UserDialog from '../../components/UserDialog';
 import Header from '../../components/Header';
 import Play from '../../components/Play';
 
-const heading = ['Mã Sinh Viên', 'Tên Sinh Viên', 'Lớp-Khoá', 'Số Điện Thoại', 'Mật Khẩu'];
-const value = ['studentCode', 'studentName', 'studentClass', 'studentPhone', 'password'];
+const heading = ['Mã Sinh Viên', 'Tên Sinh Viên', 'Lớp-Khoá', 'Số Điện Thoại'];
+const value = ['studentCode', 'studentName', 'studentClass', 'studentPhone'];
 
 export default function UserDetail() {
   //====================================== Hook ======================================

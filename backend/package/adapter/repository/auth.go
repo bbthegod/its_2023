@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"errors"
+	"its-backend/package/common"
 	"its-backend/package/config"
 	"its-backend/package/domain/model"
 	"its-backend/package/usecase/repository"
@@ -23,7 +24,7 @@ func NewAuthRepository(db *mongo.Client) repository.AuthRepository {
 	return &authRepository{db.Database(env.DbName).Collection("users")}
 }
 
-func (repository *authRepository) Login(auth *model.User) (*model.User, int, error) {
+func (repository *authRepository) Login(auth *model.User) (*model.User, string, int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -31,24 +32,23 @@ func (repository *authRepository) Login(auth *model.User) (*model.User, int, err
 	err := repository.userCollection.FindOne(ctx, bson.M{"studentCode": auth.StudentCode}).Decode(&user)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
-			return nil, http.StatusUnauthorized, errors.New("user not found")
+			return nil, "", http.StatusUnauthorized, errors.New("user not found")
 		}
-		return nil, http.StatusInternalServerError, err
+		return nil, "", http.StatusInternalServerError, err
 	}
 	if user.IsOnline {
-		return nil, http.StatusUnauthorized, errors.New("user is online")
+		return nil, "", http.StatusUnauthorized, errors.New("user is online")
 	}
 
-	if user.Role == "admin" {
-		err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(auth.Password))
-		if err != nil {
-			return nil, http.StatusUnauthorized, errors.New("studentCode or Password incorrect")
-		}
-	} else {
-		if user.Password != auth.Password {
-			return nil, http.StatusUnauthorized, errors.New("studentCode or Password incorrect")
-		}
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(auth.Password))
+	if err != nil {
+		return nil, "", http.StatusUnauthorized, errors.New("student code or password incorrect")
 	}
 
-	return user, http.StatusOK, nil
+	token, err := common.EncodeToken(user)
+	if err != nil {
+		return nil, "", http.StatusInternalServerError, err
+	}
+
+	return user, token, http.StatusOK, nil
 }

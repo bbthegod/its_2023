@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"errors"
+	"its-backend/package/common"
 	"its-backend/package/config"
 	"its-backend/package/domain/model"
 	"its-backend/package/usecase/repository"
@@ -80,8 +81,13 @@ func (repository *userRepository) Create(user *model.User) (*model.User, int, er
 
 	user.Id = primitive.NewObjectID()
 	user.Role = "user"
+	password, err := common.EncodePassword(user.Password)
+	if err != nil {
+		return nil, http.StatusInternalServerError, err
+	}
+	user.Password = password
 
-	_, err := repository.userCollection.InsertOne(ctx, user)
+	_, err = repository.userCollection.InsertOne(ctx, user)
 	if err != nil {
 		code := err.(mongo.WriteException).WriteErrors[0].Code
 		if code == 11000 {
@@ -102,6 +108,14 @@ func (repository *userRepository) Update(id primitive.ObjectID, user *model.User
 		"studentClass": user.StudentClass,
 		"studentPhone": user.StudentPhone,
 		"studentCode":  user.StudentCode,
+	}
+
+	if user.Password != "" {
+		password, err := common.EncodePassword(user.Password)
+		if err != nil {
+			return nil, http.StatusInternalServerError, err
+		}
+		update["password"] = password
 	}
 
 	var result *model.User

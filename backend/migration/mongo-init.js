@@ -4,7 +4,6 @@ db.createCollection('users');
 
 db.users.insertMany([
   {
-    "_id": ObjectId("63457db9a70e578dacbc4b29"),
     "studentCode": "admin",
     "studentName": "admin",
     "studentClass": "HTTT1-K12",
@@ -12,23 +11,15 @@ db.users.insertMany([
     "password": "$2b$10$.fk..fBDMWtl5FpnN4lgEeJLM9ENLq.qtyRtAmTq6VhOMAhqPUY1C",
     "role": "admin",
     "isOnline": false,
-    "status": NumberInt(0),
-    "createdAt": ISODate("2022-10-11T14:29:13.334+0000"),
-    "updatedAt": ISODate("2022-10-11T14:29:13.334+0000"),
-    "__v": NumberInt(0)
   },
   {
     "studentCode": "2017604482",
     "studentName": "Tung",
     "studentClass": "HTTT1-K12",
     "studentPhone": "0123456789",
-    "password": "123456",
+    "password": "$2b$10$.fk..fBDMWtl5FpnN4lgEeJLM9ENLq.qtyRtAmTq6VhOMAhqPUY1C",
     "role": "user",
     "isOnline": false,
-    "status": NumberInt(0),
-    "createdAt": ISODate("2022-10-11T14:29:13.334+0000"),
-    "updatedAt": ISODate("2022-10-11T14:29:13.334+0000"),
-    "__v": NumberInt(0)
   }
 ]);
 
@@ -36,7 +27,7 @@ db.createCollection('questions');
 
 db.questions.insertMany([
   {
-    "content": "1+1=?",
+    "content": "easy",
     "options": [
       {
         "numbering": NumberInt(1),
@@ -55,10 +46,11 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(2)
+    "correctAnswer": NumberInt(2),
+    "level": "easy"
   },
   {
-    "content": "2+2=?",
+    "content": "easy2",
     "options": [
       {
         "numbering": NumberInt(1),
@@ -77,10 +69,11 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4)
+    "correctAnswer": NumberInt(4),
+    "level": "easy"
   },
   {
-    "content": "3+3=?",
+    "content": "easy3",
     "options": [
       {
         "numbering": NumberInt(1),
@@ -99,10 +92,11 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4)
+    "correctAnswer": NumberInt(4),
+    "level": "easy"
   },
   {
-    "content": "3+3=?",
+    "content": "easy4",
     "options": [
       {
         "numbering": NumberInt(1),
@@ -121,6 +115,99 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4)
+    "correctAnswer": NumberInt(4),
+    "level": "easy"
+  },
+  {
+    "content": "easy5",
+    "options": [
+      {
+        "numbering": NumberInt(1),
+        "answer": "1"
+      },
+      {
+        "numbering": NumberInt(2),
+        "answer": "2"
+      },
+      {
+        "numbering": NumberInt(3),
+        "answer": "3"
+      },
+      {
+        "numbering": NumberInt(4),
+        "answer": "4"
+      }
+    ],
+    "correctAnswer": NumberInt(4),
+    "level": "easy"
+  },
+  {
+    "content": "medium",
+    "options": [
+      {
+        "numbering": NumberInt(1),
+        "answer": "1"
+      },
+      {
+        "numbering": NumberInt(2),
+        "answer": "2"
+      },
+      {
+        "numbering": NumberInt(3),
+        "answer": "3"
+      },
+      {
+        "numbering": NumberInt(4),
+        "answer": "4"
+      }
+    ],
+    "correctAnswer": NumberInt(4),
+    "level": "medium"
+  },
+  {
+    "content": "medium2",
+    "options": [
+      {
+        "numbering": NumberInt(1),
+        "answer": "1"
+      },
+      {
+        "numbering": NumberInt(2),
+        "answer": "2"
+      },
+      {
+        "numbering": NumberInt(3),
+        "answer": "3"
+      },
+      {
+        "numbering": NumberInt(4),
+        "answer": "4"
+      }
+    ],
+    "correctAnswer": NumberInt(4),
+    "level": "medium"
+  },
+  {
+    "content": "hard",
+    "options": [
+      {
+        "numbering": NumberInt(1),
+        "answer": "1"
+      },
+      {
+        "numbering": NumberInt(2),
+        "answer": "2"
+      },
+      {
+        "numbering": NumberInt(3),
+        "answer": "3"
+      },
+      {
+        "numbering": NumberInt(4),
+        "answer": "4"
+      }
+    ],
+    "correctAnswer": NumberInt(4),
+    "level": "hard"
   }
 ])
