@@ -47,7 +47,6 @@ export default function Interview() {
   }, [navigate]);
   //====================================== Callback ======================================
   const handleChangeSearch = (data: Play) => {
-    console.log(data)
     if (data) {
       setUserDetail(data);
     } else {
