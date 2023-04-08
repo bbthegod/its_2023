@@ -21,10 +21,15 @@ export default function PlayPage() {
   //====================================== State ======================================
   const [index, setIndex] = useState(0);
   const [playData, setPlayData] = useState<PlayData>();
-  const [question, setQuestion] = useState<Question>();
   //====================================== Const ======================================
   const token = useMemo(() => auth?.token, [auth]);
   const socket = useMemo(() => new WebSocket(SOCKET_URL), []);
+  const question: Question | null = useMemo(() => {
+    if(playData) {
+      return playData.questions[index].questionId
+    }
+    return null
+  }, [playData, index]);
   //====================================== Callback ======================================
   //Previous question
   const previous = () => {
@@ -83,7 +88,6 @@ export default function PlayPage() {
           const data = response.data
           if (data && data.timeOut) {
             setPlayData(data);
-            setQuestion(data.questions[index].questionId);
             //Checking time out of current play session
             if (new Date(data.timeOut).getTime() - new Date(Date.now()).getTime() <= 0) {
               socket.send(JSON.stringify({ type: 'disconnect', token }));
@@ -137,7 +141,7 @@ export default function PlayPage() {
           disabledNext={index === playData?.questions?.length - 1}
         />
       </div>
-      <QuestionList playData={playData} selectQuestion={selectQuestion} />
+      <QuestionList playData={playData} index={index} selectQuestion={selectQuestion} />
     </div>
   ) : (
     <Loading />

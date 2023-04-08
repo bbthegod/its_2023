@@ -222,7 +222,7 @@ func (repository *playRepository) Delete(id primitive.ObjectID) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	deleted, err := repository.playCollection.DeleteOne(ctx, bson.M{"_id": id})
+	deleted, err := repository.playCollection.DeleteOne(ctx, bson.M{"userId": id})
 	if err != nil {
 		return http.StatusInternalServerError, err
 	}
