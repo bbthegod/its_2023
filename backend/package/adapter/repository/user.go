@@ -86,13 +86,14 @@ func (repository *userRepository) Create(user *model.User) (*model.User, int, er
 		return nil, http.StatusInternalServerError, err
 	}
 	user.Password = password
+	println(user.StudentCode)
 
 	_, err = repository.userCollection.InsertOne(ctx, user)
 	if err != nil {
-		code := err.(mongo.WriteException).WriteErrors[0].Code
-		if code == 11000 {
-			return nil, http.StatusConflict, errors.New("user is already exists")
-		}
+		// code := err.(mongo.WriteException).WriteErrors[0].Code
+		// if code == 11000 {
+		// 	return nil, http.StatusConflict, errors.New("user is already exists")
+		// }
 		return nil, http.StatusInternalServerError, err
 	}
 

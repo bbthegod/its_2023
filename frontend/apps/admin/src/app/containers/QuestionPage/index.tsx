@@ -3,8 +3,7 @@
  * QuestionPage
  *
  */
-import { useContext, useMemo, useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
 import { SnackbarContext, User } from '@its/common';
 
@@ -21,42 +20,38 @@ export default function QuestionPage() {
   const Snackbar = useContext(SnackbarContext);
   //====================================== State ======================================
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [questions, setQuestions] = useState([]);
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
+  const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   //====================================== Constant ======================================
   const filter = useMemo(() => {
-    return search ? {
-      limit: rowsPerPage,
-      skip: page * rowsPerPage,
-      search,
-    } : {
-      limit: rowsPerPage,
-      skip: page * rowsPerPage,
-    };
+    return search
+      ? {
+          limit: rowsPerPage,
+          skip: page * rowsPerPage,
+          search,
+        }
+      : {
+          limit: rowsPerPage,
+          skip: page * rowsPerPage,
+        };
   }, [page, rowsPerPage, search]);
-  //====================================== Querry ======================================
-  const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ['questions', {url: '/question', filters: filter }],
-    queryFn: async () => {
-      const data = await query('/question', filter)
-      return data
-    },
-  })
-  const create = useMutation((data: User) => mutation('/question', data));
-  const questions = data?.data ?? [];
-  const count = data?.count ?? 0;
-  if (error) {
-    Snackbar?.open('Lấy dữ liệu thất bại', 'error');
-  }
-  if (create.error) {
-    Snackbar?.open('Tạo người dùng thất bại', 'error');
-  }
-  if (create.isSuccess) {
-    refetch();
-    create.reset();
-  }
   //====================================== Callback ======================================
+  const getQuestions = useCallback(() => {
+    query('/question', filter)
+      .then(data => {
+        if (data) {
+          setQuestions(data.data);
+          setCount(data.count);
+        }
+      })
+      .catch(() => {
+        Snackbar?.open('Lấy dữ liệu thất bại', 'error');
+      });
+  }, [Snackbar, filter]);
+
   const handleChangePage = (page: number) => {
     setPage(page);
   };
@@ -67,9 +62,21 @@ export default function QuestionPage() {
   };
 
   const handleCreate = (data: User) => {
-    create.mutate(data);
-    setOpen(false);
+    mutation('/question', data)
+      .then(() => {
+        Snackbar?.open('Tạo câu hỏi thành công', 'success');
+        getQuestions();
+        setOpen(false);
+      })
+      .catch(() => {
+        Snackbar?.open('Tạo câu hỏi thất bại', 'error');
+        setOpen(false);
+      });
   };
+  //====================================== Effect ======================================
+  useEffect(() => {
+    getQuestions();
+  }, [filter, getQuestions]);
   //====================================== Render ======================================
   return (
     <>
@@ -79,7 +86,7 @@ export default function QuestionPage() {
         isLeaderboard={false}
         title="question"
         heading={heading}
-        loading={isLoading}
+        loading={!questions}
         value={value}
         data={questions}
         handleChangePage={handleChangePage}

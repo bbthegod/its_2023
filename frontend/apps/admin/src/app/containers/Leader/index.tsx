@@ -3,8 +3,7 @@
  * Leaderboard
  *
  */
-import { useContext } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import DataTable from '../../components/DataTable';
 import Header from '../../components/Header';
@@ -17,21 +16,41 @@ import ExportToExcel from '../../components/ExportToExcel';
 const heading = ['Mã Sinh Viên', 'Tên Sinh Viên', 'Điểm Thi', 'Điểm Thái Độ', 'Điểm Kiến Thức', 'Tổng Điểm'];
 const value = ['userId.studentCode', 'userId.studentName', 'playScore', 'attitudeScore', 'knowledgeScore', 'totalScore'];
 
+let interval: any;
+
 export default function Leaderboard() {
   //====================================== Hook ======================================
   const Snackbar = useContext(SnackbarContext);
-  //====================================== Querry ======================================
-  const { isLoading, error, data: usersData } = useQuery(['leaderboard'], () => query('/play/leaderboard'), { refetchInterval: 10000 });
-  const users = usersData?.data
-  if (error) {
-    Snackbar?.open('Lấy dữ liệu thất bại', 'error');
-  }
+  const [play, setPlay] = useState();
+  //====================================== Callback ======================================
+  const getPlay = useCallback(() => {
+    query('/play/leaderboard')
+      .then(data => {
+        if (data) {
+          setPlay(data.data ?? []);
+        }
+      })
+      .catch(() => {
+        Snackbar?.open('Lấy dữ liệu thất bại', 'error');
+      });
+  }, [Snackbar]);
+  //====================================== Effect ======================================
+  useEffect(() => {
+    getPlay();
+    interval = setInterval(() => {
+      getPlay();
+    }, 10000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [getPlay]);
   //====================================== Render ======================================
+  if (!play) return null;
   return (
     <>
-      <ExportToExcel data={users ?? []} />
+      <ExportToExcel data={play} />
       <Header title="Bảng Xếp Hạng" subtitle="Quản lý" />
-      <DataTable loading={isLoading} isLeaderboard heading={heading} value={value} data={users ?? []} />
+      <DataTable loading={!play} isLeaderboard heading={heading} value={value} data={play} />
     </>
   );
 }
