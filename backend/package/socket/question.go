@@ -3,6 +3,7 @@ package socket
 import (
 	"context"
 	"errors"
+	"its-backend/package/config"
 	"its-backend/package/domain/model"
 	"strconv"
 	"time"
@@ -27,6 +28,8 @@ type playQuestion struct {
 func Question(data Response, collections *Collections) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+
+	conf := config.GetConfig()
 
 	user, err := Authentication(data.Token, collections)
 	if err != nil {
@@ -81,11 +84,11 @@ func Question(data Response, collections *Collections) error {
 	for index, s := range result.Questions {
 		if index == data.Data.Index {
 			if data.Data.Answer == s.QuestionId.CorrectAnswer {
-				score = score + 5
+				score = score + conf.CorrectAnswerScore
 			}
 		} else {
 			if s.Answer == s.QuestionId.CorrectAnswer {
-				score = score + 5
+				score = score + conf.CorrectAnswerScore
 			}
 		}
 	}

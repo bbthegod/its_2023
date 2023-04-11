@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"gopkg.in/yaml.v3"
 )
 
 type EnvConfig struct {
@@ -15,6 +16,12 @@ type EnvConfig struct {
 	DbURL     string
 	DbName    string
 	JWTSecret string
+}
+type Config struct {
+	CorrectAnswerScore      int `yaml:"correctAnswerScore"`
+	NumberOfEasyQuestions   int `yaml:"numberOfEasyQuestions"`
+	NumberOfMediumQuestions int `yaml:"numberOfMediumQuestions"`
+	NumberOfHardQuestions   int `yaml:"numberOfHardQuestions"`
 }
 
 func GetENV() *EnvConfig {
@@ -31,4 +38,19 @@ func GetENV() *EnvConfig {
 	ec.JWTSecret = os.Getenv("JWT_SECRET")
 	gin.SetMode(ec.GinMode)
 	return ec
+}
+
+func GetConfig() *Config {
+	config := new(Config)
+	yamlFile, err := os.ReadFile("config.yaml")
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	err = yaml.Unmarshal(yamlFile, config)
+	if err != nil {
+		log.Fatal(err)
+		return nil
+	}
+	return config
 }

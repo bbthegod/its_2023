@@ -268,6 +268,8 @@ func getRandomQuestion(repository *playRepository) ([]model.PlayQuestion, error)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	conf := config.GetConfig()
+
 	var result []model.PlayQuestion
 
 	var easyQuestions []*model.Question
@@ -296,18 +298,18 @@ func getRandomQuestion(repository *playRepository) ([]model.PlayQuestion, error)
 	}
 
 	rand.Shuffle(len(easyQuestions), func(i, j int) { easyQuestions[i], easyQuestions[j] = easyQuestions[j], easyQuestions[i] })
-	if len(easyQuestions) > 12 {
-		easyQuestions = easyQuestions[:12]
+	if len(easyQuestions) > conf.NumberOfEasyQuestions {
+		easyQuestions = easyQuestions[:conf.NumberOfEasyQuestions]
 	}
 
 	rand.Shuffle(len(mediumQuestions), func(i, j int) { mediumQuestions[i], mediumQuestions[j] = mediumQuestions[j], mediumQuestions[i] })
-	if len(mediumQuestions) > 5 {
-		mediumQuestions = mediumQuestions[:5]
+	if len(mediumQuestions) > conf.NumberOfMediumQuestions {
+		mediumQuestions = mediumQuestions[:conf.NumberOfMediumQuestions]
 	}
 
 	rand.Shuffle(len(hardQuestions), func(i, j int) { hardQuestions[i], hardQuestions[j] = hardQuestions[j], hardQuestions[i] })
-	if len(hardQuestions) > 3 {
-		hardQuestions = hardQuestions[:3]
+	if len(hardQuestions) > conf.NumberOfHardQuestions {
+		hardQuestions = hardQuestions[:conf.NumberOfHardQuestions]
 	}
 
 	for _, s := range easyQuestions {
