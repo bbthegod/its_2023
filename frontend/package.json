@@ -7,7 +7,6 @@
   },
   "private": true,
   "dependencies": {
-    "@tanstack/react-query": "^4.24.6",
     "daisyui": "^2.51.2",
     "formik": "^2.2.9",
     "postcss-import": "^15.1.0",
