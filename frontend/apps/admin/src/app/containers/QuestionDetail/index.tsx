@@ -29,7 +29,7 @@ export default function QuestionDetail() {
   //====================================== Callback ======================================
   const getQuestion = useCallback(() => {
     query(`/question/${id}`)
-      .then(data => {
+      .then((data: any) => {
         if (data) setQuestion(data.data);
       })
       .catch(() => {

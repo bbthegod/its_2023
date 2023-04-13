@@ -30,7 +30,7 @@ export default function LoginPage() {
   const onSubmit = async (values: any) => {
     setLoading(true);
     try {
-      const { response, error } = await request({
+      const response: any = await request({
         url: '/auth/login',
         method: 'POST',
         data: {
@@ -40,16 +40,13 @@ export default function LoginPage() {
       });
       if (response) {
         setAuth(response, () => navigate('/'));
-      } else if (error) {
-        console.log(error);
-        if (error.response.status === 401) {
-          Snackbar?.open('Tài khoản hoặc mật khẩu không chính xác', 'error');
-        }
       } else {
         Snackbar?.open('Đăng nhập thất bại', 'error');
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        Snackbar?.open('Tài khoản hoặc mật khẩu không chính xác', 'error');
+      }
       Snackbar?.open('Đăng nhập thất bại', 'error');
     }
     setLoading(false);
@@ -58,20 +55,18 @@ export default function LoginPage() {
   return (
     <div className="p-6 grow flex flex-col justify-center items-center">
       <div className="p-6 max-w-lg w-full">
-        <Formik initialValues={{ studentCode: '2017604482', password: '123456' }} validationSchema={validationSchema} onSubmit={onSubmit}>
+        <Formik initialValues={{ studentCode: '2017604482', password: 'spithaui' }} validationSchema={validationSchema} onSubmit={onSubmit}>
           {({ errors, touched }) => (
             <Form autoComplete="off">
-              <h1 className="font-semibold text-3xl text-center mb-4">
-              ĐĂNG NHẬP
-              </h1>
-              <div className='mb-2'>
+              <h1 className="font-semibold text-3xl text-center mb-4">ĐĂNG NHẬP</h1>
+              <div className="mb-2">
                 <Input name="studentCode" type="text" label="Mã Sinh Viên" />
               </div>
-              <div className='mb-2'>
+              <div className="mb-2">
                 <Input name="password" type={showPassword ? 'text' : 'password'} label="Mật Khẩu" />
               </div>
               <div className="flex items-center gap-2 mb-5" onClick={onShowPassword}>
-                <button className="btn btn-square btn-ghost btn-xs" type='button'>
+                <button className="btn btn-square btn-ghost btn-xs" type="button">
                   {showPassword ? (
                     <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                       <path
@@ -91,11 +86,11 @@ export default function LoginPage() {
                     </svg>
                   )}
                 </button>
-                <p className="text-sm font-semibold">{showPassword ? "Ẩn" : "Hiện"} mật khẩu</p>
+                <p className="text-sm font-semibold">{showPassword ? 'Ẩn' : 'Hiện'} mật khẩu</p>
               </div>
               <div className="">
-                <button 
-                  className={`btn btn-block ${loading ? "loading" : ""}`}
+                <button
+                  className={`btn btn-block ${loading ? 'loading' : ''}`}
                   type="submit"
                   disabled={loading || !!errors.password || !!errors.studentCode || !touched.password || !touched.studentCode}
                 >
@@ -114,8 +109,8 @@ const Input = (props: any) => {
   const [field, meta] = useField(props.name);
   return (
     <>
-      <input {...field} {...props} className={`input input-bordered ${meta.error ? "input-error" : ""} w-full`} />
-      {meta.error && meta.touched && <p className='mt-2 text-error text-xs font-semibold'>{meta.error}</p>}
-     </>
-  )
-}
+      <input {...field} {...props} className={`input input-bordered ${meta.error ? 'input-error' : ''} w-full`} />
+      {meta.error && meta.touched && <p className="mt-2 text-error text-xs font-semibold">{meta.error}</p>}
+    </>
+  );
+};

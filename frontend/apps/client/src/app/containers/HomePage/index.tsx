@@ -40,7 +40,7 @@ export default function HomePage() {
   const startPlay = useCallback(async () => {
     setLoading(true);
     try {
-      const { response } = await request({
+      const response: any = await request({
         url: `/play/start`,
         method: 'GET',
       });
@@ -58,7 +58,7 @@ export default function HomePage() {
   const getPlay = useCallback(async () => {
     setLoading(true);
     try {
-      const { response } = await request({
+      const response: any = await request({
         url: `/play/get`,
         method: 'GET',
       });
@@ -79,23 +79,13 @@ export default function HomePage() {
     <div className="p-4 grow flex flex-col justify-between">
       <div className="pt-16">
         <div className="my-4">
-          <h1 className="font-semibold text-3xl text-center mb-4">
-            Luật chơi
-          </h1>
-          <h4 className="font-semibold text-xl mb-2">
-            - Chọn 1 đáp án duy nhất.
-          </h4>
-          <h4 className="font-semibold text-xl mb-2">
-            - Thời gian làm bài là 25 phút.
-          </h4>
-          <h4 className="font-semibold text-xl mb-2">
-            - Tổng điểm sẽ được tính cùng vào điểm khi phỏng vấn.
-          </h4>
-          <h2 className="font-bold text-xl text-center">
-            IT Suppporter chúc các bạn may mắn.
-          </h2>
+          <h1 className="font-semibold text-3xl text-center mb-4">Luật chơi</h1>
+          <h4 className="font-semibold text-xl mb-2">- Chọn 1 đáp án duy nhất.</h4>
+          <h4 className="font-semibold text-xl mb-2">- Thời gian làm bài là 25 phút.</h4>
+          <h4 className="font-semibold text-xl mb-2">- Tổng điểm sẽ được tính cùng vào điểm khi phỏng vấn.</h4>
+          <h2 className="font-bold text-xl text-center">IT Suppporter chúc các bạn may mắn.</h2>
         </div>
-        <button className={`btn btn-block ${loading ? "loading" : ""}`} onClick={handleReady} color="primary">
+        <button className={`btn btn-block ${loading ? 'loading' : ''}`} onClick={handleReady} color="primary">
           BẮT ĐẦU
         </button>
       </div>
@@ -106,7 +96,11 @@ export default function HomePage() {
         </div>
         <button className="btn btn-square" onClick={logout}>
           <svg fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+            />
           </svg>
         </button>
       </div>

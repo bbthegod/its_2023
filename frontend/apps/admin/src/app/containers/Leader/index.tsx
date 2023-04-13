@@ -25,7 +25,7 @@ export default function Leaderboard() {
   //====================================== Callback ======================================
   const getPlay = useCallback(() => {
     query('/play/leaderboard')
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           setPlay(data.data ?? []);
         }

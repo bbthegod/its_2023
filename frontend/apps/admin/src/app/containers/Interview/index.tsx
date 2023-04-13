@@ -23,7 +23,7 @@ export default function Interview() {
   //====================================== Callback ======================================
   const getUsers = useCallback(() => {
     query('/play')
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           setUsers(data.data ?? []);
         }
@@ -132,6 +132,7 @@ const Autocomplete = (props: AutocompleteProps) => {
               .filter((item: any) => item.userId.studentCode.includes(search))
               .map((item: any) => (
                 <li
+                  key={item.userId.studentCode}
                   onClick={() => {
                     props.onChange(item);
                     setOpen(false);

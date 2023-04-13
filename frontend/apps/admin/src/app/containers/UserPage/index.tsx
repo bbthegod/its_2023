@@ -41,7 +41,7 @@ export default function UserPage() {
   //====================================== Callback ======================================
   const getUsers = useCallback(() => {
     query('/user', filter)
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           setUsers(data.data);
           setCount(data.count);

@@ -161,7 +161,7 @@ func (repository *playRepository) GetUserPlay(id primitive.ObjectID) (*model.Pla
 	}
 
 	if count == 0 {
-		return result, http.StatusNotFound, errors.New("play not found")
+		return result, http.StatusOK, errors.New("play not found")
 	}
 	return result, 0, nil
 }
@@ -258,7 +258,7 @@ func (repository *playRepository) GetSingle(id primitive.ObjectID) (*model.Play,
 	}
 
 	if count == 0 {
-		return result, http.StatusNotFound, errors.New("play not found")
+		return result, http.StatusOK, errors.New("play not found")
 	}
 
 	return result, 0, nil

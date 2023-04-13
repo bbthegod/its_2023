@@ -116,7 +116,7 @@ export default function UserDetail({ usersDetail, handleSubmit }: Props) {
             max={100}
             className="range"
             value={attitudeScore}
-            onChange={(e: any) => setAttitudeScore(e.target?.value)}
+            onChange={(e: any) => setAttitudeScore(+e.target?.value)}
           />
           <span className="mt-2 text-end text-sm font-bold">{attitudeScore}</span>
         </div>
@@ -130,7 +130,7 @@ export default function UserDetail({ usersDetail, handleSubmit }: Props) {
             max={100}
             className="range"
             value={knowledgeScore}
-            onChange={(e: any) => setKnowledgeScore(e.target?.value)}
+            onChange={(e: any) => setKnowledgeScore(+e.target?.value)}
           />
           <span className="mt-2 text-end text-sm font-bold">{knowledgeScore}</span>
         </div>
@@ -144,7 +144,7 @@ export default function UserDetail({ usersDetail, handleSubmit }: Props) {
             onChange={e => setComment(e.target.value)}
           />
         </div>
-        
+
         <button className="btn btn-primary mt-4" onClick={onSubmit}>
           Gửi đi
         </button>

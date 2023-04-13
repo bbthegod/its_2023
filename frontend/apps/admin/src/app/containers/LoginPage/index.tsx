@@ -29,7 +29,7 @@ export default function LoginPage() {
   const onSubmit = async (values: any) => {
     setLoading(true);
     try {
-      const { response, error } = await request({
+      const response = await request({
         url: '/auth/login',
         method: 'POST',
         data: {
@@ -39,14 +39,13 @@ export default function LoginPage() {
       });
       if (response) {
         setAuth(response, () => navigate('/'));
-      } else if (error) {
-        if (error.response.status === 401) {
-          Snackbar?.open('Tài khoản hoặc mật khẩu không chính xác', 'error');
-        }
       } else {
         Snackbar?.open('Đăng nhập thất bại', 'error');
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        Snackbar?.open('Tài khoản hoặc mật khẩu không chính xác', 'error');
+      }
       Snackbar?.open('Đăng nhập thất bại', 'error');
     }
     setLoading(false);

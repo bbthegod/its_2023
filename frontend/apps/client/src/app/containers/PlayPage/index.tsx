@@ -25,10 +25,10 @@ export default function PlayPage() {
   const token = useMemo(() => auth?.token, [auth]);
   const socket = useMemo(() => new WebSocket(SOCKET_URL), []);
   const question: Question | null = useMemo(() => {
-    if(playData) {
-      return playData.questions[index].questionId
+    if (playData) {
+      return playData.questions[index].questionId;
     }
-    return null
+    return null;
   }, [playData, index]);
   //====================================== Callback ======================================
   //Previous question
@@ -44,17 +44,13 @@ export default function PlayPage() {
   //End play
   const end = async () => {
     try {
-      const { response } = await request({
+      await request({
         url: `/play/end`,
         method: 'GET',
       });
-      if (response && response.data) {
-        socket.send(JSON.stringify({ type: 'disconnect', token }));
-        socket.close();
-        navigate('/ended');
-      } else {
-        Snackbar?.open('Có lỗi xảy ra', 'error');
-      }
+      socket.send(JSON.stringify({ type: 'disconnect', token }));
+      socket.close();
+      navigate('/ended');
     } catch (error) {
       Snackbar?.open('Có lỗi xảy ra', 'error');
     }
@@ -80,12 +76,12 @@ export default function PlayPage() {
   useEffect(() => {
     const getPlay = async () => {
       try {
-        const { response } = await request({
+        const response: any = await request({
           url: `/play/get`,
           method: 'GET',
         });
         if (response && response.data) {
-          const data = response.data
+          const data = response.data;
           if (data && data.timeOut) {
             setPlayData(data);
             //Checking time out of current play session
@@ -104,30 +100,30 @@ export default function PlayPage() {
     };
     getPlay();
     return () => {
-      if(socket.readyState === socket.OPEN){
+      if (socket.readyState === socket.OPEN) {
         socket.send(JSON.stringify({ type: 'disconnect', token }));
         socket.close();
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //====================================== Socket ======================================
-  socket.onopen = function(event) {
-    setTimeout(() => socket.send(JSON.stringify({ type: 'login', token })), 100)
+  socket.onopen = function (event) {
+    setTimeout(() => socket.send(JSON.stringify({ type: 'login', token })), 100);
   };
 
-  socket.onmessage = function(event) {
-    console.log("[message] Data received from server: "+ event.data);
-  };
-  
-  socket.onclose = function(event) {
-    console.log('[close] Connection died');
-  };
-  
-  socket.onerror = function(error) {
-    console.log("[error]");
-  };
+  // socket.onmessage = function (event) {
+  //   console.log('[message] Data received from server: ' + event.data);
+  // };
+
+  // socket.onclose = function (event) {
+  //   console.log('[close] Connection died');
+  // };
+
+  // socket.onerror = function (error) {
+  //   console.log('[error]');
+  // };
   //====================================== Render ======================================
   return playData && question ? (
     <div className="mt-4 px-4 flex flex-col gap-6">

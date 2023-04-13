@@ -17,8 +17,8 @@ function parseJSON(response: AxiosResponse) {
   return response.data;
 }
 
-export async function request(payload: any) {
-  try {
+export function request(payload: any): any {
+  return new Promise(function (resolve, reject) {
     const key = localStorage.getItem('auth');
     const auth: any = key && key !== '' ? JSON.parse(key) : undefined;
     const instance = axios.create({ baseURL: API_URL });
@@ -33,9 +33,11 @@ export async function request(payload: any) {
       response => response,
       error => Promise.reject(error),
     );
-    const fetchResponse = await instance(payload);
-    return { response: parseJSON(fetchResponse) as any, error: undefined };
-  } catch (error) {
-    return { response: undefined, error: error as any };
-  }
+    instance(payload)
+      .then(r => {
+        const res = parseJSON(r)
+        resolve(res)
+      })
+      .catch(err => reject(err));
+  })
 }

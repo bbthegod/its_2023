@@ -41,7 +41,7 @@ export default function QuestionPage() {
   //====================================== Callback ======================================
   const getQuestions = useCallback(() => {
     query('/question', filter)
-      .then(data => {
+      .then((data: any) => {
         if (data) {
           setQuestions(data.data);
           setCount(data.count);

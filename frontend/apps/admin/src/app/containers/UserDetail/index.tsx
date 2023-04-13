@@ -33,7 +33,7 @@ export default function UserDetail() {
   //====================================== Callback ======================================
   const getUser = useCallback(() => {
     query(`/user/${id}`)
-      .then(data => {
+      .then((data: any) => {
         if (data) setUser(data.data);
       })
       .catch(() => {
@@ -42,9 +42,11 @@ export default function UserDetail() {
   }, [Snackbar, id]);
 
   const getPlay = useCallback(() => {
-    query(`/play/user/${id}`).then(data => {
-      if (data) setPlay(data.data);
-    });
+    query(`/play/user/${id}`)
+      .then((data: any) => {
+        if (data) setPlay(data.data);
+      })
+      .catch();
   }, [id]);
 
   const handleRemove = () => {
