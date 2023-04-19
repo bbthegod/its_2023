@@ -132,6 +132,7 @@ const Autocomplete = (props: AutocompleteProps) => {
               .filter((item: any) => item.userId.studentCode.includes(search))
               .map((item: any) => (
                 <li
+                  className={item.isInterviewed ? 'bg-[#A5D6A7] cursor-not-allowed pointer-events-none' : ''}
                   key={item.userId.studentCode}
                   onClick={() => {
                     props.onChange(item);
