@@ -69,7 +69,7 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4),
+    "correctAnswer": NumberInt(2),
     "level": "easy"
   },
   {
@@ -92,7 +92,7 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4),
+    "correctAnswer": NumberInt(2),
     "level": "easy"
   },
   {
@@ -115,7 +115,7 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4),
+    "correctAnswer": NumberInt(2),
     "level": "easy"
   },
   {
@@ -138,7 +138,7 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4),
+    "correctAnswer": NumberInt(2),
     "level": "easy"
   },
   {
@@ -161,7 +161,7 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4),
+    "correctAnswer": NumberInt(2),
     "level": "medium"
   },
   {
@@ -184,7 +184,7 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4),
+    "correctAnswer": NumberInt(2),
     "level": "medium"
   },
   {
@@ -207,7 +207,7 @@ db.questions.insertMany([
         "answer": "4"
       }
     ],
-    "correctAnswer": NumberInt(4),
+    "correctAnswer": NumberInt(2),
     "level": "hard"
   }
 ])
