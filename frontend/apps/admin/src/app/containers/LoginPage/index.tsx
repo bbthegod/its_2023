@@ -54,7 +54,7 @@ export default function LoginPage() {
   return (
     <div className="grow flex flex-col justify-center items-center">
       <div className="p-6 w-[400px]">
-        <Formik initialValues={{ studentCode: 'admin', password: 'spithaui' }} validationSchema={validationSchema} onSubmit={onSubmit}>
+        <Formik initialValues={{ studentCode: '', password: '' }} validationSchema={validationSchema} onSubmit={onSubmit}>
           {({ errors, touched }) => (
             <Form autoComplete="off">
               <h1 className="font-semibold text-3xl text-center mb-4">ĐĂNG NHẬP</h1>

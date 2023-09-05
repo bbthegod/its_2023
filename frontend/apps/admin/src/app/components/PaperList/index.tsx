@@ -31,7 +31,7 @@ export default function PaperList() {
         </div>
 
         <div tabIndex={0} className="collapse collapse-arrow border border-base-300 bg-base-200 my-3">
-          <input type="checkbox" />
+          <input type="checkbox" defaultChecked />
           <h4 className="collapse-title text-primary font-bold text-2xl">A. Động cơ xét tuyển thành viên và quan tâm đến công việc</h4>
           <div className="collapse-content">
             <h5 className="text-lg my-1">1. Vì sao anh chị nộp đơn tham gia vào kì thi tuyển thành viên của đội?</h5>
