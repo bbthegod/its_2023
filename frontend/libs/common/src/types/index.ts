@@ -1,11 +1,12 @@
-export interface BodyTable {
+export interface Table {
   id: string;
-  array: string[];
+  data: string[];
 }
 
-export interface Table {
-  heading: string[];
-  body: BodyTable[];
+export interface DataSet {
+  title: string;
+  value: string;
+  type: 'string' | 'image';
 }
 
 export interface Option {
@@ -39,6 +40,7 @@ export interface User {
   studentPhone: string;
   isOnline: boolean;
   password: string;
+  image: string;
   role?: string;
   status?: number;
 }

@@ -109,6 +109,7 @@ func (repository *userRepository) Update(id primitive.ObjectID, user *model.User
 		"studentClass": user.StudentClass,
 		"studentPhone": user.StudentPhone,
 		"studentCode":  user.StudentCode,
+		"image":        user.Image,
 	}
 
 	if user.Password != "" {

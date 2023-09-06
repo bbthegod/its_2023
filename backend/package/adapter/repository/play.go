@@ -65,6 +65,7 @@ var playProjectionAdmin = bson.M{"$project": bson.M{
 	"userId.studentName":  1,
 	"userId.studentPhone": 1,
 	"userId.studentClass": 1,
+	"userId.image":        1,
 	"questions":           1,
 	"timeOut":             1,
 	"playScore":           1,
@@ -79,6 +80,7 @@ var playProjectionAdmin = bson.M{"$project": bson.M{
 }}
 
 var playProjectionUser = bson.M{"$project": bson.M{
+	"userId.image":                 1,
 	"userId.studentCode":           1,
 	"userId.studentName":           1,
 	"questions.questionId._id":     1,

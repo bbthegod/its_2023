@@ -5,7 +5,7 @@
  */
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-import { SnackbarContext, User } from '@its/common';
+import { DataSet, SnackbarContext, User } from '@its/common';
 
 import QuestionDialog from '../../components/QuestionDialog';
 import { mutation, query } from '../../services/admin';
@@ -13,8 +13,38 @@ import SearchBar from '../../components/SearchBar';
 import DataTable from '../../components/DataTable';
 import Header from '../../components/Header';
 
-const heading = ['Nội dung', 'Độ Khó', 'Câu trả lời 1', 'Câu trả lời 2', 'Câu trả lời 3', 'Câu trả lời 4'];
-const value = ['content', 'level', 'options[0].answer', 'options[1].answer', 'options[2].answer', 'options[3].answer'];
+const dataset: DataSet[] = [
+  {
+    title: 'Nội dung',
+    value: 'content',
+    type: 'string',
+  },
+  {
+    title: 'Độ Khó',
+    value: 'level',
+    type: 'string',
+  },
+  {
+    title: 'Câu trả lời 1',
+    value: 'options[0].answer',
+    type: 'string',
+  },
+  {
+    title: 'Câu trả lời 2',
+    value: 'options[1].answer',
+    type: 'string',
+  },
+  {
+    title: 'Câu trả lời 3',
+    value: 'options[2].answer',
+    type: 'string',
+  },
+  {
+    title: 'Câu trả lời 4',
+    value: 'options[3].answer',
+    type: 'string',
+  },
+];
 
 export default function QuestionPage() {
   const Snackbar = useContext(SnackbarContext);
@@ -43,7 +73,11 @@ export default function QuestionPage() {
     query('/question', filter)
       .then((data: any) => {
         if (data) {
-          setQuestions(data.data);
+          if (data.data) {
+            setQuestions(data.data);
+          } else {
+            setQuestions([]);
+          }
           setCount(data.count);
         }
       })
@@ -85,9 +119,8 @@ export default function QuestionPage() {
       <DataTable
         isLeaderboard={false}
         title="question"
-        heading={heading}
+        dataset={dataset}
         loading={!questions}
-        value={value}
         data={questions}
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}

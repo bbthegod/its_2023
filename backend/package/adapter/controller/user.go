@@ -5,6 +5,7 @@ import (
 	"its-backend/package/types"
 	"its-backend/package/usecase/usecase"
 	"net/http"
+	"path/filepath"
 
 	"its-backend/package/domain/model"
 
@@ -21,6 +22,7 @@ type User interface {
 	Create(c *gin.Context) error
 	Update(c *gin.Context) error
 	Delete(c *gin.Context) error
+	UploadImage(c *gin.Context) error
 }
 
 func NewUserController(uu usecase.User) User {
@@ -127,6 +129,48 @@ func (controller *userController) Delete(ctx *gin.Context) error {
 	}
 
 	code, err := controller.userUsecase.Delete(id)
+	if err != nil {
+		ctx.JSON(code, types.Response{Error: err.Error()})
+	}
+
+	ctx.Status(http.StatusOK)
+	return nil
+}
+
+func (controller *userController) UploadImage(ctx *gin.Context) error {
+	id, err := common.GetIDParam(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, types.Response{Error: err.Error()})
+		return nil
+	}
+
+	file, err := ctx.FormFile("file")
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, types.Response{Error: err.Error()})
+		return nil
+	}
+
+	user, code, err := controller.userUsecase.GetOne(id)
+	if err != nil {
+		ctx.JSON(code, types.Response{Error: err.Error()})
+		return nil
+	}
+
+	filename := user.StudentCode + filepath.Ext(file.Filename)
+
+	if err := ctx.SaveUploadedFile(file, "./public/"+filename); err != nil {
+		ctx.JSON(http.StatusInternalServerError, types.Response{Error: err.Error()})
+		return nil
+	}
+
+	u := new(model.User)
+	u.StudentCode = user.StudentCode
+	u.StudentName = user.StudentName
+	u.StudentClass = user.StudentClass
+	u.StudentPhone = user.StudentPhone
+	u.Image = string(filename)
+
+	_, code, err = controller.userUsecase.Update(id, u)
 	if err != nil {
 		ctx.JSON(code, types.Response{Error: err.Error()})
 	}

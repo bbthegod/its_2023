@@ -1,20 +1,21 @@
-import { BodyTable, Table } from '../types';
+import { DataSet, Table } from '../types';
 import { getValue } from './getValue';
 
-export function tableMaker(heading: string[], body: string[], data: any) {
-  const t: Table = {
-    heading,
-    body: [],
-  };
-  for (const i of data) {
-    const b: BodyTable = {
-      id: i._id,
-      array: [],
+export function tableMaker(dataset: DataSet[], data: any) {
+  const t: Table[] = []
+  for (const row of data) {
+    const b: any = {
+      id: row._id,
+      data: [],
     };
-    for (const j of body) {
-      b.array.push(`${getValue(i, j)}`);
+    for (const col of dataset) {
+      const c = {
+        type: col.type,
+        value: `${getValue(row, col.value)}`
+      }
+      b.data.push(c);
     }
-    t.body.push(b);
+    t.push(b);
   }
   return t;
 }

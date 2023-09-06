@@ -26,8 +26,6 @@ const routers = [
       { path: '/question/:id', element: <QuestionDetail /> },
       { path: '/interview', element: <Interview /> },
       { path: '/leaderboard', element: <Leader /> },
-      // { path: '/play', element: <PlayPage /> },
-      // { path: '/ended', element: <EndedPage /> }
     ],
     path: '/',
   },

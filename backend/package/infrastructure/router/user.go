@@ -26,5 +26,8 @@ func UserRoute(router *gin.Engine, c controller.AppController) {
 		users.DELETE(":id", func(context *gin.Context) {
 			c.User.Delete(context)
 		})
+		users.POST(":id/upload", func(context *gin.Context) {
+			c.User.UploadImage(context)
+		})
 	}
 }

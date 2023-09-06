@@ -12,6 +12,7 @@ type User struct {
 	StudentPhone string             `json:"studentPhone,omitempty" bson:"studentPhone,omitempty"`
 	Password     string             `json:"password,omitempty" bson:"password,omitempty"`
 	Role         string             `json:"role,omitempty" bson:"role,omitempty"`
+	Image        string             `json:"image,omitempty" bson:"image,omitempty"`
 	IsOnline     bool               `json:"isOnline" bson:"isOnline"`
 }
 

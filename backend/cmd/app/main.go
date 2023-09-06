@@ -23,6 +23,7 @@ func main() {
 	app := gin.Default()
 	app.Use(middleware.CORS)
 	app.Use(gzip.Gzip(gzip.DefaultCompression))
+	app.Static("/public", "./public")
 	router.NewRouter(app, r.NewAppController())
 	socket.NewSocket(app, db)
 

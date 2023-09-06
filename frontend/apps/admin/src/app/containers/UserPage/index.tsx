@@ -5,7 +5,7 @@
  */
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-import { SnackbarContext, User } from '@its/common';
+import { BASE_URL, DataSet, SnackbarContext, User } from '@its/common';
 
 import { mutation, query } from '../../services/admin';
 import UserDialog from '../../components/UserDialog';
@@ -13,8 +13,33 @@ import SearchBar from '../../components/SearchBar';
 import DataTable from '../../components/DataTable';
 import Header from '../../components/Header';
 
-const heading = ['Mã Sinh Viên', 'Tên Sinh Viên', 'Lớp-Khoá', 'Số Điện Thoại'];
-const value = ['studentCode', 'studentName', 'studentClass', 'studentPhone'];
+const dataset: DataSet[] = [
+  {
+    title: 'Ảnh Đại Diện',
+    value: 'image',
+    type: 'image',
+  },
+  {
+    title: 'Mã Sinh Viên',
+    value: 'studentCode',
+    type: 'string',
+  },
+  {
+    title: 'Tên Sinh Viên',
+    value: 'studentName',
+    type: 'string',
+  },
+  {
+    title: 'Lớp-Khoá',
+    value: 'studentClass',
+    type: 'string',
+  },
+  {
+    title: 'Số Điện Thoại',
+    value: 'studentPhone',
+    type: 'string',
+  },
+];
 
 export default function UserPage() {
   const Snackbar = useContext(SnackbarContext);
@@ -43,11 +68,20 @@ export default function UserPage() {
     query('/user', filter)
       .then((data: any) => {
         if (data) {
-          setUsers(data.data);
+          if (data.data) {
+            const list: any = data.data.map((item: any) => {
+              if (item.image) item.image = `${BASE_URL}/public/${item.image}`;
+              return item;
+            });
+            setUsers(list);
+          } else {
+            setUsers([]);
+          }
           setCount(data.count);
         }
       })
-      .catch(() => {
+      .catch((e: any) => {
+        console.log(e);
         Snackbar?.open('Lấy dữ liệu thất bại', 'error');
       });
   }, [Snackbar, filter]);
@@ -85,9 +119,8 @@ export default function UserPage() {
       <DataTable
         isLeaderboard={false}
         title="user"
-        heading={heading}
+        dataset={dataset}
         loading={!users}
-        value={value}
         data={users}
         handleChangePage={handleChangePage}
         handleChangeRowsPerPage={handleChangeRowsPerPage}
