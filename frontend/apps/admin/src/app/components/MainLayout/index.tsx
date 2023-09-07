@@ -28,9 +28,9 @@ export default function MainLayout(props: Props) {
   }
 
   return (
-    <div className="flex">
+    <div className="w-full min-h-screen flex">
       <SideBar />
-      <main className="grow ml-24 m-6">
+      <main className="w-full min-h-screen pt-24 md:pt-6 md:pl-24 p-6">
         <Outlet />
       </main>
     </div>

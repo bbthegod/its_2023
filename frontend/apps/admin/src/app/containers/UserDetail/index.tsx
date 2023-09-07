@@ -119,7 +119,7 @@ export default function UserDetail() {
           VÒNG CHƠI
         </a>
       </div>
-      <div className="mt-6 flex gap-4 justify-center">
+      <div className="mt-6 flex flex-wrap flex-col-reverse md:flex-row gap-4 justify-center">
         {tab === 0 && user && (
           <>
             <ContentDetail title="Thông tin sinh viên" heading={heading} value={value} data={user}>

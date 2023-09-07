@@ -60,12 +60,12 @@ export default function SideBar() {
   const navigate = useNavigate();
   const location = useLocation();
   return (
-    <div className="p-4 fixed w-fit h-screen">
-      <div className="p-2 bg-base-100 shadow-md h-full flex flex-col">
-        <div className="w-10 h-10 mb-4 flex justify-center items-center cursor-pointer" onClick={() => navigate('/')}>
+    <div className="p-4 fixed w-full md:w-fit h-fit md:h-screen z-[900]">
+      <div className="p-2 bg-base-100 shadow-md w-full md:w-fit h-fit md:h-full flex gap-4 flex-row md:flex-col">
+        <div className="w-10 h-10 flex justify-center items-center cursor-pointer" onClick={() => navigate('/')}>
           <img alt="Logo" className="w-7 h-7" src="/assets/images/justlogo.png" />
         </div>
-        <div className="flex flex-col gap-4 grow mb-4">
+        <div className="flex flex-row md:flex-col gap-4 grow">
           {pages.map((page: any) => (
             <div
               key={page.href}

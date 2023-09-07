@@ -50,7 +50,7 @@ export default function DataTable(props: Props) {
                   <tr>
                     {dataset &&
                       dataset.map((item: any, index: number) => (
-                        <th className="bg-base-100" key={index}>
+                        <th className="bg-base-100 !static" key={index}>
                           {item.title}
                         </th>
                       ))}
@@ -99,27 +99,27 @@ export default function DataTable(props: Props) {
                     ))}
                 </tbody>
               </table>
-              <div className="mt-2">
-                {!isLeaderboard &&
-                  page !== undefined &&
-                  count !== undefined &&
-                  rowsPerPage !== undefined &&
-                  handleChangePage &&
-                  handleChangeRowsPerPage && (
-                    <TablePagination
-                      page={page}
-                      count={count}
-                      rowsPerPage={rowsPerPage}
-                      handleChangePage={handleChangePage}
-                      handleChangeRowsPerPage={handleChangeRowsPerPage}
-                    />
-                  )}
-              </div>
+            </div>
+            <div className="mt-2">
+              {!isLeaderboard &&
+                page !== undefined &&
+                count !== undefined &&
+                rowsPerPage !== undefined &&
+                handleChangePage &&
+                handleChangeRowsPerPage && (
+                  <TablePagination
+                    page={page}
+                    count={count}
+                    rowsPerPage={rowsPerPage}
+                    handleChangePage={handleChangePage}
+                    handleChangeRowsPerPage={handleChangeRowsPerPage}
+                  />
+                )}
             </div>
           </div>
           {isLeaderboard && row && (
             <Dialog open={!!row} setOpen={() => setRow(undefined)}>
-              <div className="min-w-[700px]">
+              <div className="min-w-[200px] md:min-w-[400px]">
                 <h1 className="text-2xl font-semibold mb-5">Bình luận {row.isInterviewed ? `( ${row.interviewer} )` : ''}</h1>
                 <p className="mb-5">{row.isInterviewed ? row.comment : 'Chưa được phỏng vấn'}</p>
                 <div className="flex gap-2 justify-end mt-4">

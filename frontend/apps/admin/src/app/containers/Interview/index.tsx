@@ -84,7 +84,7 @@ export default function Interview() {
   if (!users) return null;
   return (
     <div className="grid grid-cols-12 gap-4">
-      <div className="col-span-4">
+      <div className="col-span-12 md:col-span-4">
         <div className="bg-base-100 shadow-md p-5">
           <h1 className="mb-5 text-lg font-semibold text-center">THÔNG TIN SINH VIÊN</h1>
           {users && users.length > 0 && (
@@ -96,7 +96,7 @@ export default function Interview() {
           {usersDetail && <UserDetail usersDetail={usersDetail} handleSubmit={handleSubmit} />}
         </div>
       </div>
-      <div className="text-center col-span-8">
+      <div className="text-center col-span-12 md:col-span-8">
         <PaperList />
       </div>
     </div>
