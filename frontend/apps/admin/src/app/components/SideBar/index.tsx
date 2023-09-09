@@ -65,7 +65,7 @@ export default function SideBar() {
         <div className="w-10 h-10 flex justify-center items-center cursor-pointer" onClick={() => navigate('/')}>
           <img alt="Logo" className="w-7 h-7" src="/assets/images/justlogo.png" />
         </div>
-        <div className="flex flex-row md:flex-col gap-4 grow">
+        <div className="flex flex-row md:flex-col gap-4 grow overflow-hidden">
           {pages.map((page: any) => (
             <div
               key={page.href}

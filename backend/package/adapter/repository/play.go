@@ -108,11 +108,14 @@ func (repository *playRepository) List(skip int64, limit int64) ([]*model.Play, 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	filter := bson.M{"userId.role": "user"}
+
 	cursor, err := repository.playCollection.Aggregate(ctx, []bson.M{
 		{"$limit": limit},
 		{"$skip": skip},
 		playUserLookup,
 		{"$unwind": "$userId"},
+		{"$match": filter},
 		playProjectionAdmin,
 	})
 	if err != nil {
@@ -172,9 +175,12 @@ func (repository *playRepository) Leaderboard() ([]*model.Play, int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	filter := bson.M{"userId.role": "user"}
+
 	cursor, err := repository.playCollection.Aggregate(ctx, []bson.M{
 		playUserLookup,
 		{"$unwind": "$userId"},
+		{"$match": filter},
 		playProjectionAdmin,
 		{"$sort": bson.M{"totalScore": -1}},
 	})
