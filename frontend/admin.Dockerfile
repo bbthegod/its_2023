@@ -5,8 +5,9 @@ COPY . .
 
 RUN yarn
 
-ENV NX_BASE_URL=http://192.168.1.161:8000
-ENV NX_WS_URL=ws://192.168.1.161:8000
+ENV NX_IMAGE_SERVICE_URL=http://192.168.1.162:9000
+ENV NX_BASE_URL=http://192.168.1.162:8000
+ENV NX_WS_URL=ws://192.168.1.162:8000
 
 RUN npx nx build admin --configuration=production --skip-nx-cache
 

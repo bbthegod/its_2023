@@ -6,7 +6,7 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { BASE_URL, SnackbarContext, User } from '@its/common';
+import { BASE_URL, IMAGE_SERVICE_URL, SnackbarContext, User } from '@its/common';
 import { mutation, query, upload } from '../../services/admin';
 
 import ConfirmDialog from '../../components/ConfirmDialog';
@@ -86,9 +86,10 @@ export default function UserDetail() {
   };
 
   const handleUpload = () => {
-    if (file) {
+    if (file && user) {
       const formData = new FormData();
       formData.append('file', file);
+      formData.append('studentCode', user.studentCode);
       upload(`/user/${id}/upload`, formData)
         .then(() => {
           Snackbar?.open('Tải ảnh người dùng thành công', 'success');
@@ -97,6 +98,7 @@ export default function UserDetail() {
         .catch(() => {
           Snackbar?.open('Tải ảnh người dùng thất bại', 'error');
         });
+      upload(`${IMAGE_SERVICE_URL}/api/drive`, formData).catch((e: any) => console.log(e));
     }
   };
   //====================================== Effect ======================================
@@ -187,6 +189,7 @@ export default function UserDetail() {
                       Tải lên
                       <input
                         type="file"
+                        accept="image/*"
                         value={file}
                         onChange={e => {
                           setFile(e.target.files?.[0]);
